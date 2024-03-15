@@ -1,0 +1,20 @@
+/*-------------------------
+  初期値
+-------------------------*/
+@charset "UTF-8";
+
+/*-------------------------
+  テーブル書式
+-------------------------*/
+#userTable {
+  border-collapse: collapse;
+}
+thead{
+  color: #fff;
+  background-color: cornflowerblue;
+}
+th,td{
+  border: 1px solid #ccc;
+  width: 200px;
+  text-align: center
+}
