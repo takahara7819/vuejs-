@@ -31,18 +31,43 @@ callApi().then((uesrs) => {
 
 //sort機能
 let clickCount = 0; //クリック数によって昇順/降順を切り替える
-tableID.addEventListener("click", () => {
+tableID.addEventListener("click", async () => {
+  //sort用にjson再取得
+  const sortApi = await callApi();
+  //要素削除
+  while (tbody.firstChild) {
+    tbody.removeChild(tbody.firstChild);
+  }
+
   clickCount++;
-  console.log("IDクリックテスト");
-  console.log(clickCount);
   if (clickCount == 1) {
-    alert("ID1回クリック");
+    //ID昇順
+    sortApi.sort(function (x, y) {
+      return x.id - y.id;
+    });
   }
   if (clickCount == 2) {
-    alert("ID2回クリック");
+    //ID降順
+    sortApi.sort(function (x, y) {
+      return y.id - x.id;
+    });
   }
   if (clickCount == 3) {
+    //ID通常 これいらなそう
     clickCount = 0;
-    alert("IDクリック数初期化")
+    const unsort = await callApi();
+  }
+
+  for (let i = 0; i < sortApi.length; i++) {
+    const uesrsTxt = sortApi[i];
+    tbody.insertAdjacentHTML(
+      "beforeend",
+      `<tr><td>${uesrsTxt.id}</td>
+        <td>${uesrsTxt.name}</td>
+        <td>${uesrsTxt.company}</td>
+        <td>${uesrsTxt.division}</td>
+        <td>${uesrsTxt.title}</td>
+        </tr>`
+    );
   }
 });
