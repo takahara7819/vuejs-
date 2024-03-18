@@ -6,20 +6,45 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
         <link rel="stylesheet" href="../css/style.css">
         <title>Document</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     </head>
     <body>
         <main>
-            <table id="userTable">
-                <thead id="headTable">
-                    <th id="tableID">ID</th>
-                    <th id="tableName">名前</th>
-                    <th id="tableCom">会社名</th>
-                    <th id="tableDivi">部署</th>
-                    <th id="tableTi">役職</th>
-                </thead>
-                <tbody id="tbody"></tbody>
-            </table>
+            <div id="app">
+                <table>
+                    <thead>
+                        <tr>
+                            <th v-on:click="IDsort">ID</th>
+                            <th v-on:click="IDsort">名前</th>
+                            <th v-on:click="IDsort">会社名</th>
+                            <th v-on:click="IDsort">部署</th>
+                            <th v-on:click="IDsort">役職</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ item[0].id }}</td>
+                            <td>{{ item[0].name }}</td>
+                            <td>{{ item[0].company }}</td>
+                            <td>{{ item[0].division }}</td>
+                            <td>{{ item[0].title }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>{{ test }}</p>
+            </div>
         </main>
-        <script src="../js/main.js"></script>
+        <script type="module">
+            import list from "../cards.json" assert { type: "json"};
+            console.log(list);
+
+            new Vue({
+                el: '#app',
+                data: {
+                    test: "テスト",
+                    item: list,
+                }
+            })
+        </script>
     </body>
 </html>

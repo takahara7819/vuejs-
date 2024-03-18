@@ -6,7 +6,7 @@
 /*-------------------------
   テーブル書式
 -------------------------*/
-#userTable {
+table {
   border-collapse: collapse;
 }
 thead{
