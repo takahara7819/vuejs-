@@ -13,6 +13,7 @@
             <div id="app">
                 <!-- <p>{{ list }}</p> -->
                 <p>{{ sort_key }}</p>
+                <h2>{{ sort_key }}: {{ sort_asc ? '昇順' : '降順'}}</h2>
                 <table>
                     <thead>
                         <tr>
@@ -24,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in list" :key="item.id">
+                        <tr v-for="item in sort_users" :key="item.id">
                             <td>{{ item.id }}</td>
                             <td>{{ item.name }}</td>
                             <td>{{ item.company }}</td>
@@ -39,10 +40,11 @@
             //Vue3 オプションの横にfunction()つける
             Vue.createApp({
                 data: function () {
-                    return {
+                    return { //dataはreturnの中に追記していく
                         test: "テスト",
                         list: "",   //ggると[]が多いけど""でいけるらしい
-                        sort_key: "",   //どこでsortを指定するのかに使う
+                        sort_key: "",   //どこでsortを指定するのかに使う 初期値ブランク
+                        sort_asc: true, //昇順・降順切り替え用
                     }
                 },
 
@@ -51,16 +53,33 @@
                     const users = await res.json();
                     this.list = users;
                 },
+
                 methods: {  //methodsの横にはfunction書かない？
-                    IDsortDW: function () {
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
+                    sortBy(key) {
+                        this.sort_key === key
+                            ? (this.sort_asc = !this.sort_asc) //?とか:とかなに
+                            : (this.sort_asc = true);
+                        this.sort_key = key;    //クリックされたthをsort_keyに保存する
+                    },
+                },
+
+                computed: {
+                    sort_users() { //v-forのlist→sort_usersに置き換えて表示可能
+                        
+                        if (this.sort_key != "") {  //何か書いてあるならソートする
+                            let set = 1;
+                            this.sort_asc ? (set = 1) : (set = -1);
+                            this.list.sort((a, b) => {
+                                if (a[this.sort_key] < b[this.sort_key]) return -1 * set;
+                                if (a[this.sort_key] > b[this.sort_key]) return 1 * set;
+                                return 0; //日本語ソートもこれでいいのか？
+                            });
+                            return this.list;
+                        } else {
+                            return this.list;
                         }
                     },
-                    sortBy(key){    //クリックされたthをsort_keyに保存する
-                        this.sort_key = key;
-                    }
-                }
+                },
             }).mount('#app');
         </script>
     </body>
