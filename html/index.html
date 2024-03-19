@@ -6,19 +6,32 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
         <link rel="stylesheet" href="../css/style.css">
         <title>Document</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.prod.min.js"></script>
     </head>
     <body>
         <main>
-            <table id="userTable">
-                <thead id="headTable">
-                    <th>ID</th>
-                    <th>名前</th>
-                    <th>会社名</th>
-                    <th>部署</th>
-                    <th>役職</th>
-                </thead>
-                <tbody id="tbody"></tbody>
-            </table>
+            <div id="app">
+                <table>
+                    <thead>
+                        <tr>
+                            <th @click="sortBy('id')">ID</th>
+                            <th @click="sortBy('name')">名前</th>
+                            <th @click="sortBy('company')">会社名</th>
+                            <th @click="sortBy('division')">部署</th>
+                            <th @click="sortBy('title')">役職</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in sort_users" :key="item.id">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.company }}</td>
+                            <td>{{ item.division }}</td>
+                            <td>{{ item.title }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </main>
         <script src="../js/main.js"></script>
     </body>
