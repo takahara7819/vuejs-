@@ -11,18 +11,20 @@
     <body>
         <main>
             <div id="app">
+                <!-- <p>{{ list }}</p> -->
+                <p>{{ sort_key }}</p>
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>名前</th>
-                            <th>会社名</th>
-                            <th>部署</th>
-                            <th>役職</th>
+                            <th @click="sortBy('id')">ID</th>
+                            <th @click="sortBy('name')">名前</th>
+                            <th @click="sortBy('company')">会社名</th>
+                            <th @click="sortBy('division')">部署</th>
+                            <th @click="sortBy('title')">役職</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in list">
+                        <tr v-for="item in list" :key="item.id">
                             <td>{{ item.id }}</td>
                             <td>{{ item.name }}</td>
                             <td>{{ item.company }}</td>
@@ -31,7 +33,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <p>{{ list }}</p>
             </div>
         </main>
         <script>
@@ -40,7 +41,8 @@
                 data: function () {
                     return {
                         test: "テスト",
-                        list: '',
+                        list: "",   //ggると[]が多いけど""でいけるらしい
+                        sort_key: "",   //どこでsortを指定するのかに使う
                     }
                 },
 
@@ -49,7 +51,16 @@
                     const users = await res.json();
                     this.list = users;
                 },
-               
+                methods: {  //methodsの横にはfunction書かない？
+                    IDsortDW: function () {
+                        while (tbody.firstChild) {
+                            tbody.removeChild(tbody.firstChild);
+                        }
+                    },
+                    sortBy(key){    //クリックされたthをsort_keyに保存する
+                        this.sort_key = key;
+                    }
+                }
             }).mount('#app');
         </script>
     </body>
