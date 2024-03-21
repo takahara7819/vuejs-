@@ -30,3 +30,7 @@ select{
 input{
   margin-right: 5px;
 }
+button{
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
