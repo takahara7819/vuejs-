@@ -3,9 +3,11 @@ Vue.createApp({
   data: function () {
     return {
       test: "テスト",
-      //配列 通常状態
+      //配列
       list: "",
-      newlist: "",
+      newlist: [],
+      search_list: [],
+      testlist: [],
       //sort用
       sort_key: "",
       sort_asc: true,
@@ -33,10 +35,15 @@ Vue.createApp({
         : (this.sort_asc = true);
       this.sort_key = key;
     },
+
     //絞り込み newlistに結果をpush
     searchBt(selected, search) {
       this.search_tag = selected;
       this.search_text = search;
+
+      // while (tbody.firstChild) {
+      //   tbody.removeChild(tbody.firstChild);
+      // }
 
       let newlist = [];
       if (this.search_tag == "id") {
@@ -81,7 +88,7 @@ Vue.createApp({
       }
 
       console.log(newlist);
-
+      this.search_list = newlist;
     },
   },
 

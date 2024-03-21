@@ -20,7 +20,15 @@
                 </select>
                 <input type="text" v-model="search">
                 <button @click="searchBt(selected, search)">絞り込み</button>
-                <p>{{ search }}</p>
+                <!-- <table>
+                    <tr v-for="item in testlist" :key="item.id">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.company }}</td>
+                        <td>{{ item.division }}</td>
+                        <td>{{ item.title }}</td>
+                    </tr>
+                </table> -->
                 <table>
                     <thead>
                         <tr>
@@ -32,6 +40,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr v-for="item in search_list" :key="item.id">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.company }}</td>
+                            <td>{{ item.division }}</td>
+                            <td>{{ item.title }}</td>
+                        </tr>
                         <tr v-for="item in users" :key="item.id">
                             <td>{{ item.id }}</td>
                             <td>{{ item.name }}</td>
@@ -39,6 +54,7 @@
                             <td>{{ item.division }}</td>
                             <td>{{ item.title }}</td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>
