@@ -167,6 +167,7 @@ Vue.createApp({
         if (this.add_name.match(/^[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龠]*$/)) {
           //ひらがな・カタカナ・漢字が入っていたら
           alert("名前正常");
+          
         } else {
           this.textChek = false;
           alert("名前エラー");

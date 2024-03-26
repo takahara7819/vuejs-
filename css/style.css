@@ -34,6 +34,15 @@ button{
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-label{
-  margin-left: 10px;
+/*-------------------------
+  .newform 新規情報追加
+-------------------------*/
+.newform h2{
+  margin-top: 15px;
+}
+.newform p{
+  margin: 0px;
+}
+.newform input{
+  margin-bottom: 10px;
 }
