@@ -53,10 +53,8 @@ Vue.createApp({
         if (this.search_tag == "id") {
           this.newlist = [];
           for (let i = 0; i < this.list.length; i++) {
-            if (this.list[i].id.indexOf(Number(this.search_text)) > -1) {
-              newlist.push(this.list[i]);
-            } else {
-              this.newlist.splice(i, 1);
+            if (String(this.list[i].id).indexOf(this.search_text) > -1) {
+              this.newlist.push(this.list[i]);
             }
           }
           isChek = false;
@@ -129,7 +127,6 @@ Vue.createApp({
           });
         }
       }
-      console.log(this.newlist);
       return this.newlist;
     },
   },
