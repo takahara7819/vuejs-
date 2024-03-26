@@ -15,7 +15,13 @@ Vue.createApp({
       search_text: "",
       //絞り込み機能切り替え
       isChek: false,
-      //新規情報用
+      //新規情報
+      //input初期値
+      Aname: " ",
+      Acompany: " ",
+      Adivision: " ",
+      Atitle: " ",
+      //バリデーション
       add_name: "",
       add_company: "",
       add_division: "",
@@ -58,6 +64,17 @@ Vue.createApp({
       this.add_division = Adivision;
       this.add_title = Atitle;
       this.addChek = true;
+
+      console.log(
+        "名前＝" +
+          this.add_name +
+          " 会社名＝" +
+          this.add_company +
+          " 部署名＝" +
+          this.add_division +
+          " 役職名＝" +
+          this.add_title
+      );
     },
   },
 
@@ -143,21 +160,22 @@ Vue.createApp({
           });
         }
       }
+
       //新規情報追加
       if (this.addChek) {
         //名前バリデーション
-        if (this.add_name.match(/^[ -~]*$/)) {
-          //記号と数字が入っていたらエラー
-          textChek = false;
-          alert("名前エラー");
-        } else {
+        if (this.add_name.match(/^[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龠]*$/)) {
+          //ひらがな・カタカナ・漢字が入っていたら
           alert("名前正常");
+        } else {
+          this.textChek = false;
+          alert("名前エラー");
         }
 
         //会社名バリデーション
         if (this.add_company.match(/^[ -~]*$/)) {
           //記号と数字が入っていたらエラー
-          textChek = false;
+          this.textChek = false;
           alert("会社名エラー");
         } else {
           alert("会社名正常");
@@ -166,7 +184,7 @@ Vue.createApp({
         //部署名バリデーション
         if (this.add_division.match(/^[ -~]*$/)) {
           //記号と数字が入っていたらエラー
-          textChek = false;
+          this.textChek = false;
           alert("部署名エラー");
         } else {
           alert("部署名正常");
@@ -175,12 +193,19 @@ Vue.createApp({
         //役職バリデーション
         if (this.add_title.match(/^[ -~]*$/)) {
           //記号と数字が入っていたらエラー 空欄OKにしたい
-          textChek = false;
+          this.textChek = false;
           alert("役職エラー");
         } else {
           alert("役職正常");
         }
 
+        if (this.textChek) {
+          alert("みんなオッケー");
+          //ここでnewlistにpushすればいいのかな？
+        } else {
+          alert("入力拒否"); //後で消す
+          this.textChek = true;
+        }
         addChek = false;
       }
       return this.newlist;

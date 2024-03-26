@@ -41,10 +41,10 @@
                     </tbody>
                 </table>
                 <h2>新規情報追加</h2>
-                <input type="text" placeholder="名前" v-model="Aname">
-                <input type="text" placeholder="会社名" v-model="Acompany">
-                <input type="text" placeholder="部署" v-model="Adivision">
-                <input type="text" placeholder="役職" v-model="Atitle">
+                <label>名前: </label><input type="text" v-model="Aname">
+                <label>会社名: </label><input type="text" v-model="Acompany">
+                <label>部署名: </label><input type="text" v-model="Adivision">
+                <label>役職: </label><input type="text" v-model="Atitle">
                 <button @click="addBt(Aname, Acompany, Adivision, Atitle)">作成</button>
             </div>
         </main>
