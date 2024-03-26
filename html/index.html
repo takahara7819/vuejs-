@@ -11,6 +11,15 @@
     <body>
         <main>
             <div id="app">
+                <select v-model="selected">
+                    <option value="id">ID</option>
+                    <option value="name">名前</option>
+                    <option value="company">会社名</option>
+                    <option value="division">部署</option>
+                    <option value="title">役職</option>
+                </select>
+                <input type="text" v-model="search">
+                <button @click="searchBt(selected, search)">絞り込み</button>
                 <table>
                     <thead>
                         <tr>
@@ -22,13 +31,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in sort_users" :key="item.id">
+                        <tr v-for="item in userList" :key="item.id" id="us_list">
                             <td>{{ item.id }}</td>
                             <td>{{ item.name }}</td>
                             <td>{{ item.company }}</td>
                             <td>{{ item.division }}</td>
                             <td>{{ item.title }}</td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>

@@ -2,12 +2,15 @@
   初期値
 -------------------------*/
 @charset "UTF-8";
-
+main{
+  padding: 20px;
+}
 /*-------------------------
   テーブル書式
 -------------------------*/
 table {
   border-collapse: collapse;
+  margin-top: 10px;
 }
 thead{
   color: #fff;
@@ -17,4 +20,17 @@ th,td{
   border: 1px solid #ccc;
   width: 200px;
   text-align: center
+}
+/*-------------------------
+  selectBox・input
+-------------------------*/
+select{
+  margin-right: 10px;
+}
+input{
+  margin-right: 5px;
+}
+button{
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
