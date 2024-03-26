@@ -15,6 +15,8 @@ Vue.createApp({
       search_text: "",
       //絞り込み機能切り替え
       isChek: false,
+      //ルーティング
+      title: 'Vue Resource',
     };
   },
 
