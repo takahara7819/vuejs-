@@ -48,63 +48,89 @@ Vue.createApp({
   //算出プロパティ
   computed: {
     userList() {
-      let newlist = [];
-      //sort機能
-      if (this.sort_key != "") {
-        let set = 1;
-        this.sort_asc ? (set = 1) : (set = -1);
-
-        this.list.sort((a, b) => {
-          if (a[this.sort_key] < b[this.sort_key]) return -1 * set;
-          if (a[this.sort_key] > b[this.sort_key]) return 1 * set;
-          return 0;
-        });
-      }
-
       //絞り込み機能
       if (this.isChek) {
         if (this.search_tag == "id") {
+          this.newlist = [];
           for (let i = 0; i < this.list.length; i++) {
             if (this.list[i].id.indexOf(Number(this.search_text)) > -1) {
               newlist.push(this.list[i]);
+            } else {
+              this.newlist.splice(i, 1);
             }
           }
+          isChek = false;
         }
 
         if (this.search_tag == "name") {
+          this.newlist = [];
           for (let i = 0; i < this.list.length; i++) {
             if (this.list[i].name.indexOf(this.search_text) > -1) {
               this.newlist.push(this.list[i]);
             }
           }
+          isChek = false;
         }
 
         if (this.search_tag == "company") {
+          this.newlist = [];
           for (let i = 0; i < this.list.length; i++) {
             if (this.list[i].company.indexOf(this.search_text) > -1) {
               this.newlist.push(this.list[i]);
             }
           }
+          isChek = false;
         }
 
         if (this.search_tag == "division") {
+          this.newlist = [];
           for (let i = 0; i < this.list.length; i++) {
             if (this.list[i].division.indexOf(this.search_text) > -1) {
               this.newlist.push(this.list[i]);
             }
           }
+          isChek = false;
         }
 
         if (this.search_tag == "title") {
+          this.newlist = [];
           for (let i = 0; i < this.list.length; i++) {
             if (this.list[i].title.indexOf(this.search_text) > -1) {
               this.newlist.push(this.list[i]);
             }
           }
+          isChek = false;
+        }
+
+        //sort機能
+        if (this.sort_key != "") {
+          let set = 1;
+          this.sort_asc ? (set = 1) : (set = -1);
+
+          this.newlist.sort((a, b) => {
+            if (a[this.sort_key] < b[this.sort_key]) return -1 * set;
+            if (a[this.sort_key] > b[this.sort_key]) return 1 * set;
+            return 0;
+          });
+        }
+      } else {
+        //絞り込みボタンをクリックしていない時
+        this.newlist = this.list;
+
+        //sort機能
+        if (this.sort_key != "") {
+          let set = 1;
+          this.sort_asc ? (set = 1) : (set = -1);
+
+          this.newlist.sort((a, b) => {
+            if (a[this.sort_key] < b[this.sort_key]) return -1 * set;
+            if (a[this.sort_key] > b[this.sort_key]) return 1 * set;
+            return 0;
+          });
         }
       }
       console.log(this.newlist);
-      return this.list;
+      return this.newlist;
     },
   },
 }).mount("#app");
