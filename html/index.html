@@ -7,7 +7,6 @@
         <link rel="stylesheet" href="../css/style.css">
         <title>Document</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.prod.min.js"></script>
-
     </head>
     <body>
         <main>
@@ -39,16 +38,14 @@
                             <td>{{ item.division }}</td>
                             <td>{{ item.title }}</td>
                         </tr>
-
                     </tbody>
                 </table>
-
                 <h2>新規情報追加</h2>
-                <input type="text" placeholder="名前">
-                <input type="text" placeholder="会社名">
-                <input type="text" placeholder="部署">
-                <input type="text" placeholder="役職">
-                <button>作成</button>
+                <input type="text" placeholder="名前" v-model="Aname">
+                <input type="text" placeholder="会社名" v-model="Acompany">
+                <input type="text" placeholder="部署" v-model="Adivision">
+                <input type="text" placeholder="役職" v-model="Atitle">
+                <button @click="addBt(Aname, Acompany, Adivision, Atitle)">作成</button>
             </div>
         </main>
         <script src="../js/main.js"></script>

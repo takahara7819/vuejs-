@@ -15,8 +15,13 @@ Vue.createApp({
       search_text: "",
       //絞り込み機能切り替え
       isChek: false,
-      //ルーティング
-      title: 'Vue Resource',
+      //新規情報用
+      add_name: "",
+      add_company: "",
+      add_division: "",
+      add_title: "",
+      addChek: false,
+      textChek: true,
     };
   },
 
@@ -27,7 +32,7 @@ Vue.createApp({
     this.list = users;
   },
 
-  //メソッド定義 v-onディレクティブなど
+  //メソッド定義
   methods: {
     //sort 列指定+昇順降順切り替え
     sortBy(key) {
@@ -44,6 +49,15 @@ Vue.createApp({
       this.isChek = true;
       //クリックで検索ワード取得
       //isChek切り替えで絞り込み機能ON
+    },
+
+    //新規情報追加 入力ワード取得
+    addBt(Aname, Acompany, Adivision, Atitle) {
+      this.add_name = Aname;
+      this.add_company = Acompany;
+      this.add_division = Adivision;
+      this.add_title = Atitle;
+      this.addChek = true;
     },
   },
 
@@ -128,6 +142,46 @@ Vue.createApp({
             return 0;
           });
         }
+      }
+      //新規情報追加
+      if (this.addChek) {
+        //名前バリデーション
+        if (this.add_name.match(/^[ -~]*$/)) {
+          //記号と数字が入っていたらエラー
+          textChek = false;
+          alert("名前エラー");
+        } else {
+          alert("名前正常");
+        }
+
+        //会社名バリデーション
+        if (this.add_company.match(/^[ -~]*$/)) {
+          //記号と数字が入っていたらエラー
+          textChek = false;
+          alert("会社名エラー");
+        } else {
+          alert("会社名正常");
+        }
+
+        //部署名バリデーション
+        if (this.add_division.match(/^[ -~]*$/)) {
+          //記号と数字が入っていたらエラー
+          textChek = false;
+          alert("部署名エラー");
+        } else {
+          alert("部署名正常");
+        }
+
+        //役職バリデーション
+        if (this.add_title.match(/^[ -~]*$/)) {
+          //記号と数字が入っていたらエラー 空欄OKにしたい
+          textChek = false;
+          alert("役職エラー");
+        } else {
+          alert("役職正常");
+        }
+
+        addChek = false;
       }
       return this.newlist;
     },
