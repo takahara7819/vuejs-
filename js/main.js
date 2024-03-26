@@ -7,15 +7,14 @@ Vue.createApp({
       list: "",
       newlist: [],
       search_list: [],
-      testlist: [],
       //sort用
       sort_key: "",
       sort_asc: true,
       //検索用
-      // selected: "", //select
-      // search: "", //input
       search_tag: "",
       search_text: "",
+      //絞り込み機能切り替え
+      isChek: false,
     };
   },
 
@@ -36,66 +35,21 @@ Vue.createApp({
       this.sort_key = key;
     },
 
-    //絞り込み newlistに結果をpush
+    //絞り込み
     searchBt(selected, search) {
       this.search_tag = selected;
       this.search_text = search;
-
-      // while (tbody.firstChild) {
-      //   tbody.removeChild(tbody.firstChild);
-      // }
-
-      let newlist = [];
-      if (this.search_tag == "id") {
-        //エラー 型不一致？
-        for (let i = 0; i < this.list.length; i++) {
-          if (this.list[i].id.indexOf(Number(this.search_text)) > -1) {
-            newlist.push(this.list[i]);
-          }
-        }
-      }
-
-      if (this.search_tag == "name") {
-        for (let i = 0; i < this.list.length; i++) {
-          if (this.list[i].name.indexOf(this.search_text) > -1) {
-            newlist.push(this.list[i]);
-          }
-        }
-      }
-
-      if (this.search_tag == "company") {
-        for (let i = 0; i < this.list.length; i++) {
-          if (this.list[i].company.indexOf(this.search_text) > -1) {
-            newlist.push(this.list[i]);
-          }
-        }
-      }
-
-      if (this.search_tag == "division") {
-        for (let i = 0; i < this.list.length; i++) {
-          if (this.list[i].division.indexOf(this.search_text) > -1) {
-            newlist.push(this.list[i]);
-          }
-        }
-      }
-
-      if (this.search_tag == "title") {
-        for (let i = 0; i < this.list.length; i++) {
-          if (this.list[i].title.indexOf(this.search_text) > -1) {
-            newlist.push(this.list[i]);
-          }
-        }
-      }
-
-      console.log(newlist);
-      this.search_list = newlist;
+      this.isChek = true;
+      //クリックで検索ワード取得
+      //isChek切り替えで絞り込み機能ON
     },
   },
 
   //算出プロパティ
   computed: {
-    //sort
-    users() {
+    userList() {
+      let newlist = [];
+      //sort機能
       if (this.sort_key != "") {
         let set = 1;
         this.sort_asc ? (set = 1) : (set = -1);
@@ -106,10 +60,50 @@ Vue.createApp({
           return 0;
         });
       }
-      //   return this.list;
-      // } else {
-      //   return this.list;
-      // }
+
+      //絞り込み機能
+      if (this.isChek) {
+        if (this.search_tag == "id") {
+          for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].id.indexOf(Number(this.search_text)) > -1) {
+              newlist.push(this.list[i]);
+            }
+          }
+        }
+
+        if (this.search_tag == "name") {
+          for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].name.indexOf(this.search_text) > -1) {
+              this.newlist.push(this.list[i]);
+            }
+          }
+        }
+
+        if (this.search_tag == "company") {
+          for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].company.indexOf(this.search_text) > -1) {
+              this.newlist.push(this.list[i]);
+            }
+          }
+        }
+
+        if (this.search_tag == "division") {
+          for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].division.indexOf(this.search_text) > -1) {
+              this.newlist.push(this.list[i]);
+            }
+          }
+        }
+
+        if (this.search_tag == "title") {
+          for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].title.indexOf(this.search_text) > -1) {
+              this.newlist.push(this.list[i]);
+            }
+          }
+        }
+      }
+      console.log(this.newlist);
       return this.list;
     },
   },
