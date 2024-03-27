@@ -69,17 +69,6 @@ Vue.createApp({
       this.add_division = Adivision;
       this.add_title = Atitle;
       this.addChek = true;
-
-      console.log(
-        "名前＝" +
-          this.add_name +
-          " 会社名＝" +
-          this.add_company +
-          " 部署名＝" +
-          this.add_division +
-          " 役職名＝" +
-          this.add_title
-      );
     },
   },
 
@@ -170,43 +159,32 @@ Vue.createApp({
       if (this.addChek) {
         //名前バリデーション
         if (this.add_name.match(/^[ -~]*$/)) {
-          //ひらがな・カタカナ・漢字が入っていたらオッケー
           this.textChek = false;
-          this.nameError = "ひらがな・カタカナ・漢字で入力してください";
-        } else {
-          alert("名前正常");
+          this.nameError = "Error";
         }
 
         //会社名バリデーション
         if (this.add_company.match(/^[ -~]*$/)) {
-          //記号と数字が入っていたらエラー
           this.textChek = false;
           this.companyError = "Error";
-        } else {
-          alert("会社名正常");
         }
 
         //部署名バリデーション
         if (this.add_division.match(/^[ -~]*$/)) {
-          //記号と数字が入っていたらエラー
           this.textChek = false;
           this.divisionError = "Error";
-        } else {
-          alert("部署名正常");
         }
 
         //役職バリデーション
-        if (this.add_title.match(/^[ -~]*$/)) {
-          //記号と数字が入っていたらエラー 空欄OKにしたい
+        if (this.add_title.match(/^[!-~]*$/)) {
           this.textChek = false;
           this.titlenameError = "Error";
-        } else {
-          alert("役職正常");
         }
 
         if (this.textChek) {
           const lastID = this.list.slice(-1)[0];
           const newID = lastID.id + 1;
+
           const new_user = {
             "id": newID,
             "name": this.add_name,
@@ -215,7 +193,6 @@ Vue.createApp({
             "title": this.add_title
           };
           this.newlist.push(new_user);
-          console.log(this.newlist)
 
           addChek = false;
         } else {
