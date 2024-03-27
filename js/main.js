@@ -28,6 +28,11 @@ Vue.createApp({
       add_title: "",
       addChek: false,
       textChek: true,
+      //バリデーションエラーメッセージ
+      nameError: "",
+      companyError: "",
+      divisionError: "",
+      titlenameError: "",
     };
   },
 
@@ -164,20 +169,19 @@ Vue.createApp({
       //新規情報追加
       if (this.addChek) {
         //名前バリデーション
-        if (this.add_name.match(/^[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龠]*$/)) {
-          //ひらがな・カタカナ・漢字が入っていたら
-          alert("名前正常");
-          
-        } else {
+        if (this.add_name.match(/^[ -~]*$/)) {
+          //ひらがな・カタカナ・漢字が入っていたらオッケー
           this.textChek = false;
-          alert("名前エラー");
+          this.nameError = "ひらがな・カタカナ・漢字で入力してください";
+        } else {
+          alert("名前正常");
         }
 
         //会社名バリデーション
         if (this.add_company.match(/^[ -~]*$/)) {
           //記号と数字が入っていたらエラー
           this.textChek = false;
-          alert("会社名エラー");
+          this.companyError = "Error";
         } else {
           alert("会社名正常");
         }
@@ -186,7 +190,7 @@ Vue.createApp({
         if (this.add_division.match(/^[ -~]*$/)) {
           //記号と数字が入っていたらエラー
           this.textChek = false;
-          alert("部署名エラー");
+          this.divisionError = "Error";
         } else {
           alert("部署名正常");
         }
@@ -195,7 +199,7 @@ Vue.createApp({
         if (this.add_title.match(/^[ -~]*$/)) {
           //記号と数字が入っていたらエラー 空欄OKにしたい
           this.textChek = false;
-          alert("役職エラー");
+          this.titlenameError = "Error";
         } else {
           alert("役職正常");
         }
@@ -203,11 +207,26 @@ Vue.createApp({
         if (this.textChek) {
           alert("みんなオッケー");
           //ここでnewlistにpushすればいいのかな？
+
+          //listの最後のIDを取得 + 1 でID番号を作りたい
+          const lastID = this.list.slice(-1)[0];
+          const newID = lastID.id + 1;
+          console.log(
+            newID +
+              this.add_name +
+              this.add_company +
+              this.add_division +
+              this.add_title
+          );
+          
+          this.newlist.push();
+
+          addChek = false;
         } else {
-          alert("入力拒否"); //後で消す
+          alert("入力拒否");
           this.textChek = true;
+          addChek = false;
         }
-        addChek = false;
       }
       return this.newlist;
     },

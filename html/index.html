@@ -42,11 +42,11 @@
                 </table>
                 <div class="newform">
                     <h2>新規情報追加</h2>
-                    <p>名前 </p><input type="text" v-model="Aname">
-                    <p>会社名 </p><input type="text" v-model="Acompany">
-                    <p>部署名 </p><input type="text" v-model="Adivision">
-                    <p>役職 </p><input type="text" v-model="Atitle">
-                    <button @click="addBt(Aname, Acompany, Adivision, Atitle)">作成</button>
+                    <p>名前 </p><input type="text" v-model="Aname"><strong class="red">{{ nameError }}</strong>
+                    <p>会社名 </p><input type="text" v-model="Acompany"><strong class="red">{{ companyError }}</strong>
+                    <p>部署名 </p><input type="text" v-model="Adivision"><strong class="red">{{ divisionError }}</strong>
+                    <p>役職 </p><input type="text" v-model="Atitle"><strong class="red">{{ titlenameError }}</strong>
+                    <p><button @click="addBt(Aname, Acompany, Adivision, Atitle)">作成</button></p>
                 </div>
             </div>
         </main>
