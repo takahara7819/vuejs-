@@ -205,25 +205,20 @@ Vue.createApp({
         }
 
         if (this.textChek) {
-          alert("みんなオッケー");
-          //ここでnewlistにpushすればいいのかな？
-
-          //listの最後のIDを取得 + 1 でID番号を作りたい
           const lastID = this.list.slice(-1)[0];
           const newID = lastID.id + 1;
-          console.log(
-            newID +
-              this.add_name +
-              this.add_company +
-              this.add_division +
-              this.add_title
-          );
-          
-          this.newlist.push();
+          const new_user = {
+            "id": newID,
+            "name": this.add_name,
+            "company": this.add_company,
+            "division": this.add_division,
+            "title": this.add_title
+          };
+          this.newlist.push(new_user);
+          console.log(this.newlist)
 
           addChek = false;
         } else {
-          alert("入力拒否");
           this.textChek = true;
           addChek = false;
         }
