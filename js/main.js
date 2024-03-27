@@ -1,9 +1,38 @@
 Vue.createApp({
+  //データ定義
   data: function () {
     return {
+      test: "テスト",
+      //配列
       list: "",
+      newlist: [],
+      search_list: [],
+      //sort用
       sort_key: "",
       sort_asc: true,
+      //検索用
+      search_tag: "",
+      search_text: "",
+      //絞り込み機能切り替え
+      isChek: false,
+      //新規情報
+      //input初期値
+      Aname: " ",
+      Acompany: " ",
+      Adivision: " ",
+      Atitle: " ",
+      //バリデーション
+      add_name: "",
+      add_company: "",
+      add_division: "",
+      add_title: "",
+      addChek: false,
+      textChek: true,
+      //バリデーションエラーメッセージ
+      nameError: "",
+      companyError: "",
+      divisionError: "",
+      titlenameError: "",
     };
   },
 
@@ -14,31 +43,164 @@ Vue.createApp({
     this.list = users;
   },
 
+  //メソッド定義
   methods: {
+    //sort 列指定+昇順降順切り替え
     sortBy(key) {
       this.sort_key === key
         ? (this.sort_asc = !this.sort_asc)
         : (this.sort_asc = true);
-
       this.sort_key = key;
+    },
+
+    //絞り込み
+    searchBt(selected, search) {
+      this.search_tag = selected;
+      this.search_text = search;
+      this.isChek = true;
+      //クリックで検索ワード取得
+      //isChek切り替えで絞り込み機能ON
+    },
+
+    //新規情報追加 入力ワード取得
+    addBt(Aname, Acompany, Adivision, Atitle) {
+      this.add_name = Aname;
+      this.add_company = Acompany;
+      this.add_division = Adivision;
+      this.add_title = Atitle;
+      this.addChek = true;
     },
   },
 
+  //算出プロパティ
   computed: {
-    sort_users() {
-      if (this.sort_key != "") {
-        let set = 1;
-        this.sort_asc ? (set = 1) : (set = -1);
+    userList() {
+      //絞り込み機能
+      if (this.isChek) {
+        if (this.search_tag == "id") {
+          this.newlist = [];
+          for (let i = 0; i < this.list.length; i++) {
+            if (String(this.list[i].id).indexOf(this.search_text) > -1) {
+              this.newlist.push(this.list[i]);
+            }
+          }
+          isChek = false;
+        }
 
-        this.list.sort((a, b) => {
-          if (a[this.sort_key] < b[this.sort_key]) return -1 * set;
-          if (a[this.sort_key] > b[this.sort_key]) return 1 * set;
-          return 0;
-        });
-        return this.list;
+        if (this.search_tag == "name") {
+          this.newlist = [];
+          for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].name.indexOf(this.search_text) > -1) {
+              this.newlist.push(this.list[i]);
+            }
+          }
+          isChek = false;
+        }
+
+        if (this.search_tag == "company") {
+          this.newlist = [];
+          for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].company.indexOf(this.search_text) > -1) {
+              this.newlist.push(this.list[i]);
+            }
+          }
+          isChek = false;
+        }
+
+        if (this.search_tag == "division") {
+          this.newlist = [];
+          for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].division.indexOf(this.search_text) > -1) {
+              this.newlist.push(this.list[i]);
+            }
+          }
+          isChek = false;
+        }
+
+        if (this.search_tag == "title") {
+          this.newlist = [];
+          for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].title.indexOf(this.search_text) > -1) {
+              this.newlist.push(this.list[i]);
+            }
+          }
+          isChek = false;
+        }
+
+        //sort機能
+        if (this.sort_key != "") {
+          let set = 1;
+          this.sort_asc ? (set = 1) : (set = -1);
+
+          this.newlist.sort((a, b) => {
+            if (a[this.sort_key] < b[this.sort_key]) return -1 * set;
+            if (a[this.sort_key] > b[this.sort_key]) return 1 * set;
+            return 0;
+          });
+        }
       } else {
-        return this.list;
+        //絞り込みボタンをクリックしていない時
+        this.newlist = this.list;
+
+        //sort機能
+        if (this.sort_key != "") {
+          let set = 1;
+          this.sort_asc ? (set = 1) : (set = -1);
+
+          this.newlist.sort((a, b) => {
+            if (a[this.sort_key] < b[this.sort_key]) return -1 * set;
+            if (a[this.sort_key] > b[this.sort_key]) return 1 * set;
+            return 0;
+          });
+        }
       }
+
+      //新規情報追加
+      if (this.addChek) {
+        //名前バリデーション
+        if (this.add_name.match(/^[ -~]*$/)) {
+          this.textChek = false;
+          this.nameError = "Error";
+        }
+
+        //会社名バリデーション
+        if (this.add_company.match(/^[ -~]*$/)) {
+          this.textChek = false;
+          this.companyError = "Error";
+        }
+
+        //部署名バリデーション
+        if (this.add_division.match(/^[ -~]*$/)) {
+          this.textChek = false;
+          this.divisionError = "Error";
+        }
+
+        //役職バリデーション
+        if (this.add_title.match(/^[!-~]*$/)) {
+          this.textChek = false;
+          this.titlenameError = "Error";
+        }
+
+        if (this.textChek) {
+          const lastID = this.list.slice(-1)[0];
+          const newID = lastID.id + 1;
+
+          const new_user = {
+            "id": newID,
+            "name": this.add_name,
+            "company": this.add_company,
+            "division": this.add_division,
+            "title": this.add_title
+          };
+          this.newlist.push(new_user);
+
+          addChek = false;
+        } else {
+          this.textChek = true;
+          addChek = false;
+        }
+      }
+      return this.newlist;
     },
   },
 }).mount("#app");
